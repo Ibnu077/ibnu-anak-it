@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website Modern dengan Animasi dan Fitur Lengkap</title>
+<style>
+  /* Reset and base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    color: #333;
+    line-height: 1.6;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    list-style: none;
+  }
+  
+  /* Navbar */
+  nav {
+    position: fixed;
+    width: 100%;
+    background: rgba(15, 15, 30, 0.9);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+  }
+  nav .logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+  nav ul {
+    display: flex;
+    gap: 1.8rem;
+  }
+  nav ul li a {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    color: #e7e7e7;
+  }
+  nav ul li a:hover,
+  nav ul li a.active {
+    background: #00c6ff;
+    color: #fff;
+    box-shadow: 0 0 8px #00c6ff;
+  }
+
+  /* Hero section */
+  #beranda {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+    position: relative;
+    color: white;
+  }
+  #beranda::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,0.55);
+    z-index: 0;
+  }
+  #beranda .content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+  #beranda h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    animation: slideInFromLeft 1.2s ease forwards;
+    opacity: 0;
+  }
+  #beranda p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 2.3s ease forwards;
+    opacity: 0;
+  }
+  #beranda .btn {
+    background: #00c6ff;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.9rem 2.4rem;
+    border-radius: 40px;
+    transition: background-color 0.3s ease, box-shadow 0.4s ease;
+    box-shadow: 0 0 20px #00c6ff66;
+    cursor: pointer;
+    border: none;
+  }
+  #beranda .btn:hover {
+    background: #008fcb;
+    box-shadow: 0 0 40px #008fcbcc;
+  }
+
+  /* Sections */
+  section {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto 5rem;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  }
+  section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #00b4db;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+  }
+  section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #00c6ff;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* About */
+  #about p {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+  }
+
+  /* Services */
+  #services .service-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .service {
+    background: linear-gradient(145deg, #00c6ff, #007c91);
+    color: white;
+    flex: 1 1 250px;
+    min-width: 250px;
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+  .service.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .service h3 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  .service p {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  /* Portfolio */
+  #portfolio .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+  }
+  .portfolio-item {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    position: relative;
+    background: #eee;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+  .portfolio-item.visible {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .portfolio-item img {
+    width: 100%;
+    display: block;
+    border-radius: 15px;
+    transition: transform 0.6s ease;
+  }
+  .portfolio-item:hover img {
+    transform: scale(1.1);
+  }
+  .portfolio-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,198,255,0.7);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    font-weight: 700;
+    font-size: 1.4rem;
+    border-radius: 15px;
+    transition: opacity 0.4s ease;
+  }
+  .portfolio-item:hover .overlay {
+    opacity: 1;
+  }
+
+  /* Contact */
+  #contact form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  #contact label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #222;
+  }
+  #contact input, #contact textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.3rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+  }
+  #contact input:focus, #contact textarea:focus {
+    outline: none;
+    border-color: #00c6ff;
+    box-shadow: 0 0 8px #00c6ff88;
+  }
+  #contact textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  #contact button {
+    background-color: #00c6ff;
+    color: white;
+    padding: 0.8rem 2.2rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 15px #00c6ffaa;
+    transition: background-color 0.3s ease;
+  }
+  #contact button:hover {
+    background-color: #008fcb;
+    box-shadow: 0 0 25px #008fcbcc;
+  }
+  #contact .thank-you-message {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #008fcb;
+    margin-top: 1rem;
+    display: none;
+  }
+
+  /* Animations */
+  @keyframes slideInFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Responsive navbar for mobile */
+  @media (max-width: 768px) {
+    nav ul {
+      display: none;
+      flex-direction: column;
+      background-color: rgba(15,15,30,0.95);
+      position: fixed;
+      top: 60px;
+      right: 0;
+      width: 200px;
+      padding: 1rem;
+      border-radius: 0 0 0 10px;
+      box-shadow: -4px 8px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      transform-origin: top right;
+    }
+    nav ul.show {
+      display: flex;
+    }
+    nav ul li a {
+      padding: 0.8rem 1rem;
+      font-size: 1.2rem;
+    }
+    nav .menu-toggle {
+      cursor: pointer;
+      font-size: 1.8rem;
+      user-select: none;
+      color: #00c6ff;
+      display: block;
+    }
+  }
+  @media (min-width: 769px) {
+    nav .menu-toggle {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" tabindex="0" role="link" aria-label="Beranda" onclick="scrollToSection('beranda')">MyWebsite</div>
+  <div class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" role="button">&#9776;</div>
+  <ul>
+    <li><a href="#beranda" class="active">Beranda</a></li>
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#services">Layanan</a></li>
+    <li><a href="#portfolio">Portofolio</a></li>
+    <li><a href="#contact">Kontak</a></li>
+  </ul>
+</nav>
+
+<section id="beranda" tabindex="-1">
+  <div class="content" role="banner">
+    <h1>Selamat Datang di Website Kami</h1>
+    <p>Menghadirkan pengalaman web modern dan interaktif dengan animasi yang menarik.</p>
+    <button class="btn" onclick="scrollToSection('contact')">Hubungi Kami</button>
+  </div>
+</section>
+
+<section id="about" tabindex="-1">
+  <h2>Tentang Kami</h2>
+  <p class="fade-in">Kami adalah perusahaan teknologi dengan komitmen tinggi untuk menghadirkan solusi digital terbaik bagi klien kami. Dengan tim profesional dan kreatif, kami berfokus pada inovasi dan kepuasan pelanggan.</p>
+</section>
+
+<section id="services" tabindex="-1" aria-label="Layanan kami">
+  <h2>Layanan</h2>
+  <div class="service-list">
+    <div class="service" tabindex="0" aria-describedby="srv1desc">
+      <h3>Pengembangan Web</h3>
+      <p id="srv1desc">Membangun website responsif dan cepat dengan teknologi terbaru yang disesuaikan dengan kebutuhan Anda.</p>
+    </div>
+    <div class="service" tabindex="0" aria-describedby="srv2desc">
+      <h3>Desain UI/UX</h3>
+      <p id="srv2desc">Menciptakan antarmuka pengguna yang menarik dan mudah digunakan untuk meningkatkan pengalaman pengunjung.</p>
+    </div>
+    <div class="service" tabindex="0" aria-describedby="srv3desc">
+      <h3>Digital Marketing</h3>
+      <p id="srv3desc">Memperluas jangkauan bisnis Anda melalui strategi pemasaran digital yang efektif dan terukur.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio" tabindex="-1" aria-label="Portofolio kami">
+  <h2>Portofolio</h2>
+  <div class="grid">
+    <div class="portfolio-item" tabindex="0" role="article" aria-label="Proyek A">
+      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80" alt="Proyek A"/>
+      <div class="overlay">Proyek A</div>
+    </div>
+    <div class="portfolio-item" tabindex="0" role="article" aria-label="Proyek B">
+      <img src=<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website Modern dengan Animasi dan Fitur Lengkap</title>
+<style>
+  /* Reset and base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    color: #333;
+    line-height: 1.6;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    list-style: none;
+  }
+  
+  /* Navbar */
+  nav {
+    position: fixed;
+    width: 100%;
+    background: rgba(15, 15, 30, 0.9);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+  }
+  nav .logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+  nav ul {
+    display: flex;
+    gap: 1.8rem;
+  }
+  nav ul li a {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    color: #e7e7e7;
+  }
+  nav ul li a:hover,
+  nav ul li a.active {
+    background: #00c6ff;dd
+    color: #fff;
+    box-shadow: 0 0 8px #00c6ff;
+  }
+
+  /* Hero section */
+  #beranda {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+    position: relative;
+    color: white;
+  }
+  #beranda::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,0.55);
+    z-index: 0;
+  }
+  #beranda .content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+  #beranda h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    animation: slideInFromLeft 1.2s ease forwards;
+    opacity: 0;
+  }
+  #beranda p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 2.3s ease forwards;
+    opacity: 0;
+  }
+  #beranda .btn {
+    background: #00c6ff;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.9rem 2.4rem;
+    border-radius: 40px;
+    transition: background-color 0.3s ease, box-shadow 0.4s ease;
+    box-shadow: 0 0 20px #00c6ff66;
+    cursor: pointer;
+    border: none;
+  }
+  #beranda .btn:hover {
+    background: #008fcb;
+    box-shadow: 0 0 40px #008fcbcc;
+  }
+
+  /* Sections */
+  section {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto 5rem;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  }
+  section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #00b4db;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+  }
+  section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #00c6ff;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* About */
+  #about p {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+  }
+
+  /* Services */
+  #services .service-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .service {
+    background: linear-gradient(145deg, #00c6ff, #007c91);
+    color: white;
+    flex: 1 1 250px;
+    min-width: 250px;
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+  .service.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .service h3 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  .service p {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  /* Portfolio */
+  #portfolio .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+  }
+  .portfolio-item {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    position: relative;
+    background: #eee;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+  .portfolio-item.visible {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .portfolio-item img {
+    width: 100%;
+    display: block;
+    border-radius: 15px;
+    transition: transform 0.6s ease;
+  }
+  .portfolio-item:hover img {
+    transform: scale(1.1);
+  }
+  .portfolio-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,198,255,0.7);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    font-weight: 700;
+    font-size: 1.4rem;
+    border-radius: 15px;
+    transition: opacity 0.4s ease;
+  }
+  .portfolio-item:hover .overlay {
+    opacity: 1;
+  }
+
+  /* Contact */
+  #contact form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  #contact label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #222;
+  }
+  #contact input, #contact textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.3rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+  }
+  #contact input:focus, #contact textarea:focus {
+    outline: none;
+    border-color: #00c6ff;
+    box-shadow: 0 0 8px #00c6ff88;
+  }
+  #contact textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  #contact button {
+    background-color: #00c6ff;
+    color: white;
+    padding: 0.8rem 2.2rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 15px #00c6ffaa;
+    transition: background-color 0.3s ease;
+  }
+  #contact button:hover {
+    background-color: #008fcb;
+    box-shadow: 0 0 25px #008fcbcc;
+  }
+  #contact .thank-you-message {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #008fcb;
+    margin-top: 1rem;
+    display: none;
+  }
+
+  /* Animations */
+  @keyframes slideInFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Responsive navbar for mobile */
+  @media (max-width: 768px) {
+    nav ul {
+      display: none;
+      flex-direction: column;
+      background-color: rgba(15,15,30,0.95);
+      position: fixed;
+      top: 60px;
+      right: 0;
+      width: 200px;
+      padding: 1rem;
+      border-radius: 0 0 0 10px;
+      box-shadow: -4px 8px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      transform-origin: top right;
+    }
+    nav ul.show {
+      display: flex;
+    }
+    nav ul li a {
+      padding: 0.8rem 1rem;
+      font-size: 1.2rem;
+    }
+    nav .menu-toggle {
+      cursor: pointer;
+      font-size: 1.8rem;
+      user-select: none;
+      color: #00c6ff;
+      display: block;
+    }
+  }
+  @media (min-width: 769px) {
+    nav .menu-toggle {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" tabindex="0" role="link" aria-label="Beranda" onclick="scrollToSection('beranda')">MyWebsite</div>
+  <div class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" role="button">&#9776;</div>
+  <ul>
+    <li><a href="#beranda" class="active">Beranda</a></li>
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#services">Layanan</a></li>
+    <li><a href="#portfolio">Portofolio</a></li>
+    <li><a href="#contact">Kontak</a></li>
+  </ul>
+</nav>
+
+<section id="beranda" tabindex="-1">
+  <div class="content" role="banner">
+    <h1>Selamat Datang di Website Kami</h1>
+    <p>Menghadirkan pengalaman web modern dan interaktif dengan animasi yang menarik.</p>
+    <button class="btn" onclick="scrollToSection('contact')">Hubungi Kami</button>
+  </div>
+</section>
+
+<section id="about" tabindex="-1">
+  <h2>Tentang Kami</h2>
+  <p class="fade-in">Kami adalah perusahaan teknologi dengan komitmen tinggi untuk menghadirkan solusi digital terbaik bagi klien kami. Dengan tim profesional dan kreatif, kami berfokus pada inovasi dan kepuasan pelanggan.</p>
+</section>
+
+<section id="services" tabindex="-1" aria-label="Layanan kami">
+  <h2>Layanan</h2>
+  <div class="service-list">
+    <div class="service" tabindex="0" aria-describedby="srv1desc">
+      <h3>Pengembangan Web</h3>
+      <p id="srv1desc">Membangun website responsif dan cepat dengan teknologi terbaru yang disesuaikan dengan kebutuhan Anda.</p>
+    </div>
+    <div class="service" tabindex="0" aria-describedby="srv2desc">
+      <h3>Desain UI/UX</h3>
+      <p id="srv2desc">Menciptakan antarmuka pengguna yang menarik dan mudah digunakan untuk meningkatkan pengalaman pengunjung.</p>
+    </div>
+    <div class="service" tabindex="0" aria-describedby="srv3desc">
+      <h3>Digital Marketing</h3>
+      <p id="srv3desc">Memperluas jangkauan bisnis Anda melalui strategi pemasaran digital yang efektif dan terukur.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio" tabindex="-1" aria-label="Portofolio kami">
+  <h2>Portofolio</h2>
+  <div class="grid">
+    <div class="portfolio-item" tabindex="0" role="article" aria-label="Proyek A">
+      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80" alt="Proyek A"/>
+      <div class="overlay">Proyek A</div>
+    </div>
+    <div class="portfolio-item" tabindex="0" role="article" aria-label="Proyek B">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="Proyek B"/>
+      <div class="overlay">Proyek B</div>
+    </div>
+    <div class="portfolio-item" tabindex="0" role="article" aria-label="Proyek C">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Proyek C"/>
+      <div class="overlay">Proyek C</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" tabindex="-1" aria-label="Form kontak">
+  <h2>Kontak Kami</h2>
+  <form id="contactForm" aria-live="polite" novalidate>
+    <label for="name">Nama</label>
+    <input type="text" id="name" name="name" required aria-required="true" placeholder="Masukkan nama Anda"/>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required aria-required="true" placeholder="Masukkan email Anda"/>
+    <label for="message">Pesan</label>
+    <textarea id="message" name="message" required aria-required="true" placeholder="Tulis pesan Anda di sini"></textarea>
+    <button type="submit" aria-describedby="submitDesc">Kirim Pesan</button>
+    <p id="submitDesc" class="thank-you-message" role="alert" aria-live="assertive"></p>
+  </form>
+</section>
+
+<script>
+  // Toggle mobile menu
+  const menuToggle = document.querySelector('nav .menu-toggle');
+  const navUl = document.querySelector('nav ul');
+  menuToggle.addEventListener('click', () => {
+    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!expanded));
+    navUl.classList.toggle('show');
+  });
+
+  // Smooth scroll handler for logo and button
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.focus();
+      el.scrollIntoView({behavior: 'smooth'});
+      // Close mobile menu if open
+      if (navUl.classList.contains('show')) {
+        navUl.classList.remove('show');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  // Highlight active navbar link on scroll
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav ul li a');
+
+  function activateNavLink() {
+    let index = sections.length;
+
+    while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
+    navLinks.forEach((link) => link.classList.remove('active'));
+    if(navLinks[index]) navLinks[index].classList.add('active');
+  }
+  activateNavLink();
+  window.addEventListener('scroll', activateNavLink);
+
+  // Intersection Observer for animations
+  const fadeInElements = document.querySelectorAll('.fade-in');
+  const serviceElements = document.querySelectorAll('.service');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  const observerOptions = {
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('fade-in')) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+        if (entry.target.classList.contains('service')) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+        if (entry.target.classList.contains('portfolio-item')) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      }
+    });
+  }, observerOptions);
+
+  fadeInElements.forEach(el => observer.observe(el));
+  serviceElements.forEach(el => observer.observe(el));
+  portfolioItems.forEach(el => observer.observe(el));
+
+  // Contact form submission handling
+  const contactForm = document.getElementById('contactForm');
+  const thankYouMsg = document.querySelector('#submitDesc');
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Simple validation
+    if(!contactForm.name.value.trim() || !contactForm.email.value.trim() || !contactForm.message.value.trim()){
+      thankYouMsg.style.color = 'red';
+      thankYouMsg.textContent = 'Mohon isi semua field dengan benar.';
+      return;
+    }
+    // Reset message color and show success message
+    thankYouMsg.style.color = '#008fcb';
+    thankYouMsg.textContent = 'Terima kasih atas pesan Anda! Kami akan segera menghubungi Anda.';
+    contactForm.reset();
+  });
+</script>
+
+</body>
+</html>
+
+" alt="Proyek B"/>
+      <div class="overlay">Proyek B</div>
+    </div>
+    <div class="portfolio-item" tabindex="0" role="article" aria-label="Proyek C">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Proyek C"/>
+      <div class="overlay">Proyek C</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" tabindex="-1" aria-label="Form kontak">
+  <h2>Kontak Kami</h2>
+  <form id="contactForm" aria-live="polite" novalidate>
+    <label for="name">Nama</label>
+    <input type="text" id="name" name="name" required aria-required="true" placeholder="Masukkan nama Anda"/>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required aria-required="true" placeholder="Masukkan email Anda"/>
+    <label for="message">Pesan</label>
+    <textarea id="message" name="message" required aria-required="true" placeholder="Tulis pesan Anda di sini"></textarea>
+    <button type="submit" aria-describedby="submitDesc">Kirim Pesan</button>
+    <p id="submitDesc" class="thank-you-message" role="alert" aria-live="assertive"></p>
+  </form>
+</section>
+
+<script>
+  // Toggle mobile menu
+  const menuToggle = document.querySelector('nav .menu-toggle');
+  const navUl = document.querySelector('nav ul');
+  menuToggle.addEventListener('click', () => {
+    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!expanded));
+    navUl.classList.toggle('show');
+  });
+
+  // Smooth scroll handler for logo and button
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.focus();
+      el.scrollIntoView({behavior: 'smooth'});
+      // Close mobile menu if open
+      if (navUl.classList.contains('show')) {
+        navUl.classList.remove('show');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  // Highlight active navbar link on scroll
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav ul li a');
+
+  function activateNavLink() {
+    let index = sections.length;
+
+    while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
+    navLinks.forEach((link) => link.classList.remove('active'));
+    if(navLinks[index]) navLinks[index].classList.add('active');
+  }
+  activateNavLink();
+  window.addEventListener('scroll', activateNavLink);
+
+  // Intersection Observer for animations
+  const fadeInElements = document.querySelectorAll('.fade-in');
+  const serviceElements = document.querySelectorAll('.service');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  const observerOptions = {
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('fade-in')) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+        if (entry.target.classList.contains('service')) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+        if (entry.target.classList.contains('portfolio-item')) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      }
+    });
+  }, observerOptions);
+
+  fadeInElements.forEach(el => observer.observe(el));
+  serviceElements.forEach(el => observer.observe(el));
+  portfolioItems.forEach(el => observer.observe(el));
+
+  // Contact form submission handling
+  const contactForm = document.getElementById('contactForm');
+  const thankYouMsg = document.querySelector('#submitDesc');
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Simple validation
+    if(!contactForm.name.value.trim() || !contactForm.email.value.trim() || !contactForm.message.value.trim()){
+      thankYouMsg.style.color = 'red';
+      thankYouMsg.textContent = 'Mohon isi semua field dengan benar.';
+      return;
+    }
+    // Reset message color and show success message
+    thankYouMsg.style.color = '#008fcb';
+    thankYouMsg.textContent = 'Terima kasih atas pesan Anda! Kami akan segera menghubungi Anda.';
+    contactForm.reset();
+  });
+</script>
+
+</body>
+</html>
+
